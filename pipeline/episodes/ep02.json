@@ -1,0 +1,74 @@
+{
+  "id": "ep02",
+  "series": "tran-vs-mongol",
+  "title": "Uijin (First Battle)",
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "shots": [
+    {
+      "id": "S1",
+      "duration": 9,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: 来るぞ……ひるむな！",
+      "prompt": "Mongol vanguard cavalry charging in a dust cloud, a ragtag militia of young soldiers bracing spears, the boy at the front shouting a command, dynamic tracking camera, tense, dawn light"
+    },
+    {
+      "id": "S2",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: やれる……俺にもやれるんだ！",
+      "prompt": "the boy fiercely charging and unhorsing a Mongol rider with his curved sword, exhilarated flushed face, fast action, motion blur, sparks of clashing steel, low heroic angle"
+    },
+    {
+      "id": "S3",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "narration": "だが戦場は、勢いだけの少年に容赦しなかった。",
+      "prompt": "a battle-hardened Mongol officer overpowers the boy, knocking his sword away, the boy thrown to the ground beneath a war horse, desperate, dust and chaos, dramatic high angle, danger"
+    },
+    {
+      "id": "S4",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["yetkieu", "toan"],
+      "dialogue": "イェッ・キエウ: 死に急ぐなよ、若殿。命は何度も使えない。",
+      "prompt": "a lean young man bursts out from the river with damp hair, knocks the enemy back and pulls the boy up, easygoing grin, water splashing, heroic rescue moment, splashes catching light"
+    },
+    {
+      "id": "S5",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["yetkieu", "toan"],
+      "dialogue": "トアン: すげぇ……あれが、戦い方……。",
+      "prompt": "the young man dives underwater and slashes the hull of a Mongol river boat, the boat sinking with panicked soldiers, the boy watching in awe from the bank, underwater-to-surface cut, dynamic"
+    },
+    {
+      "id": "S6",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["mai", "toan"],
+      "dialogue": "マイ: 無茶ばかり……。生きててくれなきゃ、意味がない。 / トアン: ……ああ。強くなる。",
+      "prompt": "a quiet field camp at dusk, the girl gently treating the boy's wound with herbal medicine, his face mixing frustration and realization, soft firelight, intimate close two-shot, tender"
+    },
+    {
+      "id": "S7",
+      "duration": 9,
+      "mode": "t2v",
+      "characters": [],
+      "narration": "脱歓の本隊、二十万。退却の角笛が、戦場を裂いた。",
+      "prompt": "the horizon turns black with the endless main Mongol army under banners, a retreat horn echoing, soldiers turning to fall back, overwhelming scale, ominous wide shot, cold light"
+    },
+    {
+      "id": "S8",
+      "duration": 9,
+      "mode": "i2v",
+      "characters": ["toan", "hungdao"],
+      "dialogue": "陳興道(影): 退いて、勝つ。それが戦だ。",
+      "caption": "――次回、焦土。",
+      "prompt": "a messenger shouting the retreat order, the boy gritting his teeth in defiance, the shadow of a mounted general falling over him from behind, hard cut to black, dramatic cliffhanger"
+    }
+  ]
+}

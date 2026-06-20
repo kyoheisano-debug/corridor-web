@@ -1,0 +1,74 @@
+{
+  "id": "ep05",
+  "series": "tran-vs-mongol",
+  "title": "Hanko no Hibuta (The Counterattack Begins)",
+  "paywall": true,
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "shots": [
+    {
+      "id": "S1",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["hungdao"],
+      "dialogue": "陳興道: 今ぞ——かかれ！",
+      "prompt": "dawn over a reed marsh, the veteran general swinging down his command baton, the Dai Viet army rising all at once from ambush in the reeds, epic sweeping wide shot, golden morning light, war drums"
+    },
+    {
+      "id": "S2",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: 俺は、もう守られるだけじゃない！",
+      "prompt": "fire arrows raining on Mongol war boats, fierce melee on the riverbank, the boy leading the charge and cutting down riders with confident skilled swordwork, exhilarating fast action, motion blur, embers"
+    },
+    {
+      "id": "S3",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["yetkieu", "ngulao", "toan"],
+      "dialogue": "グー・ラオ: 道は開いた！ 行け、若大将！",
+      "prompt": "the diver sinking Mongol boats from the water, the huge warrior sweeping enemies aside with his long spear, the boy breaking through the gap they open, coordinated heroic action, dynamic, spray and dust"
+    },
+    {
+      "id": "S4",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["mai", "toan"],
+      "dialogue": "マイ: ……無事で。必ず、帰ってきて。",
+      "prompt": "behind the lines the girl treating wounded soldiers, looking toward the battlefield with a praying gaze, a fleeting eye contact with the boy across the chaos, emotional, soft light amid war"
+    },
+    {
+      "id": "S5",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["toado", "toan"],
+      "dialogue": "唆都: 小僧が。身の程を知れ。 / トアン: その首、もらう！",
+      "prompt": "on a war boat deck the ruthless veteran general cutting down soldiers with overwhelming skill, the boy leaping forward to face him, intense standoff, dramatic low angle, cold morning light"
+    },
+    {
+      "id": "S6",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["toan", "toado"],
+      "narration": "経験も、膂力も及ばない。それでも退けぬ理由が、彼にはあった。",
+      "prompt": "a sword duel between the boy and the veteran general, the boy pushed back by superior skill but standing his ground, flashes of his friends' and the girl's faces in his mind, intense dramatic clash, sparks"
+    },
+    {
+      "id": "S7",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["toan", "toado"],
+      "dialogue": "トアン(裂帛): 破——強敵ッ！",
+      "prompt": "the boy lunges with everything he has, his sword and the general's blade about to cross in mid-air, time seeming to freeze at the peak instant, extreme dramatic slow-motion, blinding light flare"
+    },
+    {
+      "id": "S8",
+      "duration": 8,
+      "mode": "t2v",
+      "characters": [],
+      "caption": "この勝負の行方は――。続きは、本編で。",
+      "prompt": "two blades cross in a blinding flash of light, the screen whiting out then cutting to black at the very peak moment, outcome hidden, ultimate cliffhanger, dramatic"
+    }
+  ]
+}

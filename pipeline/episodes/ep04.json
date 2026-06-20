@@ -1,0 +1,74 @@
+{
+  "id": "ep04",
+  "series": "tran-vs-mongol",
+  "title": "Sattatsu no Chikai (The Sat That Oath)",
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "shots": [
+    {
+      "id": "S1",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["ngulao", "toan"],
+      "dialogue": "グー・ラオ: ガキ大将、道は俺が開く。お前は娘っ子を取り戻せ！",
+      "prompt": "a huge muscular warrior sweeps away a line of Mongol riders with one swing of his long spear, an arrow stuck in his leg he doesn't notice, hearty bold grin, the boy staring amazed, dynamic low angle, dust and impact"
+    },
+    {
+      "id": "S2",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["toan", "yetkieu", "ngulao"],
+      "dialogue": "イェッ・キエウ: 水路は俺が。正面は……まあ、こいつだな。",
+      "prompt": "three companions — the boy, the lean diver, the huge warrior — moving together through dark woods, scouting a distant Mongol camp at night, tense teamwork, moonlight, cinematic"
+    },
+    {
+      "id": "S3",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["yetkieu", "ngulao", "toan"],
+      "narration": "水を制する者、力で拓く者、そして——駆ける少年。",
+      "prompt": "a night raid on a Mongol camp: the diver silently emerging from water to take out a sentry, the huge warrior smashing a wooden palisade, the boy dashing through the breach, firelit chaos, dynamic"
+    },
+    {
+      "id": "S4",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["toan", "mai"],
+      "dialogue": "トアン: 遅くなった。もう、離さない。 / マイ: ……信じてた。",
+      "prompt": "the boy slides in and cuts the ropes binding the girl, she looks up with teary relieved eyes, a brief tender eye contact between them, warm firelight in the dark, emotional close two-shot"
+    },
+    {
+      "id": "S5",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["toan", "mai", "ngulao"],
+      "dialogue": "グー・ラオ(笑): はっはっ、いい初仕事だったな、若大将！",
+      "prompt": "the companions and the rescued girl retreating into the night, a Mongol watchtower burning behind them, the huge warrior laughing heartily, the boy carrying relief on his face, wide backlit shot"
+    },
+    {
+      "id": "S6",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "narration": "腕に刻むは『殺韃』の二文字。退かぬという、血の誓い。",
+      "prompt": "in a war camp soldiers tattooing the characters on their forearms, the boy gritting his teeth as the mark is cut into his arm, gazes of shared resolve exchanged, solemn firelit ceremony, dramatic close-ups"
+    },
+    {
+      "id": "S7",
+      "duration": 8,
+      "mode": "i2v",
+      "characters": ["hungdao"],
+      "dialogue": "陳興道: 痩せた敵を、鹹子へ誘い込む。反攻の刻は——近い。",
+      "prompt": "the veteran general pointing at a war map by lamplight, outlining a lure-and-counterattack plan, the companions around him with fighting spirit in their eyes, tense strategic mood, warm light"
+    },
+    {
+      "id": "S8",
+      "duration": 8,
+      "mode": "i2v",
+      "characters": ["toado"],
+      "narration": "南から来たる、モンゴルの名将・唆都。反攻の前に、最強の壁が立つ。",
+      "caption": "――次回、反攻の火蓋。",
+      "prompt": "a river covered with Mongol war boats, a cold ruthless veteran general standing at the prow, piercing sharp gaze toward the camera, imposing menacing presence, hard cut to black, dramatic cliffhanger"
+    }
+  ]
+}

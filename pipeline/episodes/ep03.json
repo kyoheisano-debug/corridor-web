@@ -1,0 +1,74 @@
+{
+  "id": "ep03",
+  "series": "tran-vs-mongol",
+  "title": "Shoudo (Scorched Earth)",
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "shots": [
+    {
+      "id": "S1",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["hungdao"],
+      "dialogue": "陳興道: 家を空け、庭を空けよ。敵に与える糧を、一粒も残すな。",
+      "prompt": "a stoic veteran general standing on a hilltop overlooking a retreating army, raising a hand to give a calm command, commanding cloak in the wind, dignified wide shot, overcast light"
+    },
+    {
+      "id": "S2",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["mai"],
+      "narration": "人々は自らの家を焼いた。敵に何も残さぬために。",
+      "prompt": "villagers setting fire to their own homes and fields and walking away, the girl staring at her burning birthplace biting her lip, sorrowful, embers rising, emotional wide-to-close shot, ash falling"
+    },
+    {
+      "id": "S3",
+      "duration": 12,
+      "mode": "i2v",
+      "characters": ["toan", "hungdao"],
+      "dialogue": "トアン: 逃げてばかりで、国が守れるのか！ / 陳興道: 国を捨ててでも、民が生きれば国は残る。",
+      "prompt": "the boy angrily confronting the veteran general, who answers calmly and firmly, tense face-to-face two-shot, torchlight, emotional, depth of field"
+    },
+    {
+      "id": "S4",
+      "duration": 10,
+      "mode": "t2v",
+      "characters": [],
+      "dialogue": "脱歓: もぬけの殻だと……。小癪な真似を。",
+      "prompt": "the Mongol commander Toghan riding into an empty deserted capital city, no food no people, growing frustration on his face, hollow streets, cold grand wide shot, grey light"
+    },
+    {
+      "id": "S5",
+      "duration": 11,
+      "mode": "i2v",
+      "characters": ["hungdao", "toan"],
+      "dialogue": "陳興道: 我ら、同じ大地に生きる者。屈すれば末代までの恥ぞ。",
+      "prompt": "the veteran general reading an exhortation aloud to gathered soldiers in a war camp at night, soldiers' eyes lighting with resolve, the boy clenching his fist among them, firelit, stirring"
+    },
+    {
+      "id": "S6",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["toan", "mai"],
+      "dialogue": "マイ: 家は焼けた。でも……あなたたちがいれば、また作れる。 / トアン: 俺が、必ず取り返す。全部。",
+      "prompt": "by a campfire, the boy sitting close to the girl who lost her home, a quiet promise between them, warm intimate firelight, gentle two-shot, soft mood"
+    },
+    {
+      "id": "S7",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["mai"],
+      "dialogue": "マイ(叫ぶ): トアン……っ！",
+      "prompt": "Mongol scouts raiding a column of fleeing refugees, chaos and dust, the girl seized and dragged onto a horse, reaching out and screaming, dynamic urgent camera, dramatic danger"
+    },
+    {
+      "id": "S8",
+      "duration": 8,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: マイ――！ 離せ、貴様ら！",
+      "caption": "――次回、殺韃の誓い。",
+      "prompt": "the boy spinning around at the scream, drawing his sword and sprinting, his path blocked by a wall of Mongol cavalry, desperate fury, hard cut to black, dramatic cliffhanger"
+    }
+  ]
+}
