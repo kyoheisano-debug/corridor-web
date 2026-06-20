@@ -82,9 +82,20 @@ cheek, hearty bold grin, heavy armor, holding a long spear/glaive,
 powerful imposing build, full body character sheet, neutral background
 ```
 
-### モンゴル将（脚色）― 敵役
-- フビライ配下の侵攻軍の将。圧倒的な強大さと“倒す快感”を担う。
-- 容姿: 重厚なモンゴル式甲冑・毛皮、鋭い眼光、威圧的。
+### 唆都（サド / Toa Do, Sogetu）― 敵役・名将【史実・脚色】
+- モンゴルの名将。南（チャンパ方面）から攻め上る冷酷な武人。シーズン1の“壁”＝ボス格。
+- 史実では鹹子・章陽〜西結の戦い（1285）で敗死。トアンの成長を測る強敵として配置。
+- 容姿: 40代、鋭い眼光、長い黒髪、毛皮付きのモンゴル式重甲冑、湾刀。圧倒的な武と威圧感。
+- **Seedance 参照画像プロンプト**:
+```
+{style token}, a cold ruthless Mongol veteran general in his 40s, sharp
+piercing eyes, long dark hair, heavy fur-trimmed Mongol lamellar armor, a
+curved saber, menacing imposing presence, full body character sheet,
+neutral background
+```
+
+### その他モンゴル兵（脚色）― 雑兵・先鋒
+- 圧倒的な物量と強大さで“倒す快感”を担う。重厚なモンゴル式甲冑・毛皮、鋭い眼光。
 
 ---
 

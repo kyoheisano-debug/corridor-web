@@ -28,6 +28,8 @@ DramaBox 型の縦型ショートドラマモデルを、**日本のアニメク
 - [`docs/content/vietnam-ep01-script.md`](./docs/content/vietnam-ep01-script.md) — 第1話 脚本「握り潰したミカン」（ショットリスト）
 - [`docs/content/vietnam-ep02-script.md`](./docs/content/vietnam-ep02-script.md) — 第2話 脚本「初陣」
 - [`docs/content/vietnam-ep03-script.md`](./docs/content/vietnam-ep03-script.md) — 第3話 脚本「焦土」
+- [`docs/content/vietnam-ep04-script.md`](./docs/content/vietnam-ep04-script.md) — 第4話 脚本「殺韃の誓い」
+- [`docs/content/vietnam-ep05-script.md`](./docs/content/vietnam-ep05-script.md) — 第5話 脚本「反攻の火蓋」（課金境界）
 
 ## 制作パイプライン
 

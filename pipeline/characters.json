@@ -25,6 +25,11 @@
       "name": "Pham Ngu Lao",
       "role": "ally (brute)",
       "ref_prompt": "a huge muscular warrior, short black hair, a scar on his cheek, hearty bold grin, heavy armor, holding a long spear, powerful imposing build, full body character sheet, neutral background"
+    },
+    "toado": {
+      "name": "Toa Do (Sogetu)",
+      "role": "antagonist (Mongol general)",
+      "ref_prompt": "a cold ruthless Mongol veteran general in his 40s, sharp piercing eyes, long dark hair, heavy fur-trimmed Mongol lamellar armor, a curved saber, menacing imposing presence, full body character sheet, neutral background"
     }
   }
 }
