@@ -25,3 +25,8 @@ DramaBox 型の縦型ショートドラマモデルを、**日本のアニメク
 - [`docs/content/vietnam-concept.md`](./docs/content/vietnam-concept.md) — 第1作 企画（ベトナム史シリーズ）
 - [`docs/content/character-design.md`](./docs/content/character-design.md) — キャラ設定 & ビジュアルバイブル（Seedanceプロンプト付き）
 - [`docs/content/vietnam-ep01-script.md`](./docs/content/vietnam-ep01-script.md) — 第1話 脚本「握り潰したミカン」（ショットリスト）
+
+## 制作パイプライン
+
+- [`pipeline/`](./pipeline/) — 脚本(JSON) → Seedance で動画を自動生成するパイプライン（キー不要のドライラン付き）。手順は [`pipeline/README.md`](./pipeline/README.md)
+- [`CLAUDE.md`](./CLAUDE.md) — Claude Code で制作を自動化するためのガイド

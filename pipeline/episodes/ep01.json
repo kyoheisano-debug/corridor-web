@@ -1,0 +1,81 @@
+{
+  "id": "ep01",
+  "series": "tran-vs-mongol",
+  "title": "Kuzushita Mikan (The Crushed Orange)",
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "shots": [
+    {
+      "id": "S1",
+      "duration": 8,
+      "mode": "t2v",
+      "characters": [],
+      "narration": "モンゴル帝国――世界の半分を呑み込んだ最強の軍が、いま小国・大越に迫っていた。",
+      "prompt": "epic wide shot, vast Mongol cavalry horde silhouetted on the horizon under dark storm clouds, dust and war banners, ominous war drums atmosphere, slow forward camera push, cinematic scale"
+    },
+    {
+      "id": "S2",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: ……俺は、まだ何もできない。",
+      "prompt": "a burning village at dusk, villagers fleeing in panic, embers in the air, a 16-year-old boy standing frozen, fists clenched, frustration on his face, handheld dynamic camera, firelight"
+    },
+    {
+      "id": "S3",
+      "duration": 9,
+      "mode": "i2v",
+      "characters": ["toan", "mai"],
+      "dialogue": "マイ: あなた……！ / トアン: 掴まれ、急げ！",
+      "prompt": "a girl trips as a burning wooden beam falls, the boy dashes in and shields her, brief intense eye contact, sparks and smoke, dramatic low angle, slow-motion accent"
+    },
+    {
+      "id": "S4",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "衛兵: 若殿はお引き取りを。軍議は大人の場にござる。",
+      "prompt": "a grand medieval war council hall, lords and generals seated, the boy rushing to the entrance, two guards blocking him with crossed spears, formal tense atmosphere, warm lantern light"
+    },
+    {
+      "id": "S5",
+      "duration": 8,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: 俺だって戦える！ 国が燃えているんだぞ！",
+      "prompt": "the boy shouting in anger and frustration, pushed back as a heavy wooden door closes in front of him, tears of rage in his eyes, close-up to medium shot, dramatic shadow"
+    },
+    {
+      "id": "S6",
+      "duration": 10,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "narration": "悔しさのあまり、彼は手の中のミカンを握り潰したことにすら、気づかなかった。",
+      "prompt": "extreme close-up of a trembling hand crushing an orange without noticing, juice dripping between fingers, then reveal the boy's furious distant eyes, symbolic dramatic lighting, shallow depth of field"
+    },
+    {
+      "id": "S7",
+      "duration": 9,
+      "mode": "i2v",
+      "characters": ["mai", "toan"],
+      "dialogue": "マイ: その手……。 / トアン: ……見てろ。認められないなら、戦果で示すだけだ。",
+      "prompt": "the girl catches up and gasps seeing the crushed orange in the boy's hand, he looks down then up with newfound resolve burning in his eyes, intimate two-shot, soft rim light"
+    },
+    {
+      "id": "S8",
+      "duration": 8,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "dialogue": "トアン: 俺たちで、この国を守る！",
+      "prompt": "the boy raising a war banner with chinese characters, a crowd of young recruits cheering and raising fists behind him, low heroic angle, golden hour backlight, banners waving, epic uplifting"
+    },
+    {
+      "id": "S9",
+      "duration": 6,
+      "mode": "i2v",
+      "characters": ["toan"],
+      "caption": "――次回、初陣。",
+      "prompt": "over a ridge the Mongol vanguard cavalry suddenly appears charging with rising dust, the boy draws his curved sword facing them, tense cliffhanger, hard cut to black, dramatic"
+    }
+  ]
+}
