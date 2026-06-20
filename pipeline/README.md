@@ -26,18 +26,34 @@ python3 generate.py --episode episodes/ep01.json --provider mock
 `output/ep01/` に各ショットのプレースホルダと、**実際にAPIへ送る payload（`*.request.json`）**、
 全体の `manifest.json` が出力される。**プロンプト・参照画像の紐付け・尺をキー消費ゼロでレビュー**できる。
 
-## 本番生成（fal.ai 経由）
+## 本番生成（seedance2.ai 経由＝本プロジェクトの契約先）
 
 ```bash
 cd pipeline
-cp .env.example .env        # FAL_KEY を記入
-set -a; . ./.env; set +a    # .env を環境変数に読み込む
-python3 generate.py --episode episodes/ep01.json --provider fal
+cp .env.example .env         # SEEDANCE2_API_KEY に sk_live_... を記入
+set -a; . ./.env; set +a     # .env を環境変数に読み込む
+python3 generate.py --episode episodes/ep01.json --provider seedance2
 ```
 
-- 標準ライブラリのみで動作（`requests` 不要）。
-- 価格感: Seedance は概ね **$0.10/秒前後（サードパーティ経由で更に安価）**。
-  9ショット計約78秒 → 1パスあたり数ドル規模。リテイクを見込む。
+- 標準ライブラリのみで動作（`requests` 不要）。Bearer 認証・非同期タスク（作成→ポーリング）に対応。
+- **要確認**: エンドポイント/フィールド名は `https://seedance2.ai/api-docs`（要ログイン）の仕様に
+  合わせて `providers.py` のデフォルトを置いている。差異があれば `.env` の
+  `SEEDANCE2_*` で上書き可能（コード改修不要）。下記「seedance2.ai の設定確認」参照。
+- image-to-video の参照画像は既定で **base64 で埋め込み**。APIがURL指定なら `SEEDANCE2_IMAGE_AS_URL=1`。
+- 価格感: Seedance は概ね **$0.10/秒前後**。5話計約409秒 → 1パス$40前後。リテイクを見込む。
+
+### seedance2.ai の設定確認（最初の1回）
+api-docs を見て、実際の値と次の既定が合っているか確認する:
+
+| .env キー | 既定値 | 確認ポイント |
+|---|---|---|
+| `SEEDANCE2_VIDEO_CREATE` | `/v1/videos/generations` | 動画タスク作成の POST パス |
+| `SEEDANCE2_IMAGE_CREATE` | `/v1/images/generations` | 画像タスク作成の POST パス |
+| `SEEDANCE2_VIDEO_MODEL` | `seedance-2.0` | 動画モデル名 |
+| `SEEDANCE2_IMAGE_MODEL` | `seedance-2.0-image` | 画像モデル名 |
+
+レスポンスの task id / video url のフィールド名は複数候補を自動探索する実装（`_dig`）。
+それでも拾えない場合はエラーに「check field mapping」と出るので、api-docs の実フィールドを共有のこと。
 
 ## よく使うオプション
 

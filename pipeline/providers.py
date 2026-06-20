@@ -189,8 +189,133 @@ class KieProvider(VideoProvider):
         return GenResult(ok=False, error="KieProvider.generate_video not implemented yet")
 
 
+# --------------------------------------------------------------------------- #
+# seedance2.ai provider — the route the project is contracted on.
+#
+# Documented shape (verify exact field names at https://seedance2.ai/api-docs
+# while logged in — the page is not publicly fetchable):
+#   - Auth   : Authorization: Bearer sk_live_...
+#   - Create : POST {BASE}/v1/videos/generations
+#              body: {"model": ..., "callback_url"?: ..., "input": {prompt, ...}}
+#              -> returns a task id immediately (async)
+#   - Poll   : GET {BASE}/v1/videos/generations/{id} until status completed
+#
+# Everything that might differ between the docs and this guess is read from env
+# so it can be corrected without touching code. Image-to-video reference images
+# are embedded as base64 data URIs by default (set SEEDANCE2_IMAGE_AS_URL=1 if
+# the API expects a hosted URL instead).
+# --------------------------------------------------------------------------- #
+class Seedance2Provider(VideoProvider):
+    name = "seedance2"
+
+    def __init__(self):
+        self.key = os.environ.get("SEEDANCE2_API_KEY")
+        if not self.key:
+            raise RuntimeError("SEEDANCE2_API_KEY is not set (see pipeline/.env.example)")
+        self.base = os.environ.get("SEEDANCE2_BASE_URL", "https://seedance2.ai").rstrip("/")
+        self.video_create = os.environ.get("SEEDANCE2_VIDEO_CREATE", "/v1/videos/generations")
+        self.image_create = os.environ.get("SEEDANCE2_IMAGE_CREATE", "/v1/images/generations")
+        self.video_model = os.environ.get("SEEDANCE2_VIDEO_MODEL", "seedance-2.0")
+        self.image_model = os.environ.get("SEEDANCE2_IMAGE_MODEL", "seedance-2.0-image")
+        self.image_as_url = os.environ.get("SEEDANCE2_IMAGE_AS_URL") == "1"
+
+    # -- low-level helpers --------------------------------------------------- #
+    def _headers(self) -> dict:
+        return {"Authorization": f"Bearer {self.key}", "Content-Type": "application/json"}
+
+    def _request(self, method: str, path_or_url: str, body: Optional[dict] = None) -> dict:
+        url = path_or_url if path_or_url.startswith("http") else f"{self.base}{path_or_url}"
+        data = json.dumps(body).encode("utf-8") if body is not None else None
+        req = urllib.request.Request(url, data=data, headers=self._headers(), method=method)
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+
+    @staticmethod
+    def _dig(d: dict, *keys):
+        """Return the first present key from a (possibly nested) response."""
+        for k in keys:
+            cur = d
+            ok = True
+            for part in k.split("."):
+                if isinstance(cur, dict) and part in cur:
+                    cur = cur[part]
+                else:
+                    ok = False
+                    break
+            if ok and cur:
+                return cur
+        return None
+
+    def _poll(self, task_id: str, kind: str) -> dict:
+        path = f"{self.video_create if kind == 'video' else self.image_create}/{task_id}"
+        for _ in range(120):  # up to ~10 min at 5s
+            data = self._request("GET", path)
+            status = (self._dig(data, "status", "state", "data.status") or "").lower()
+            if status in {"completed", "succeeded", "success", "done"}:
+                return data
+            if status in {"failed", "error", "canceled"}:
+                raise RuntimeError(f"seedance2 task failed: {data}")
+            time.sleep(5)
+        raise TimeoutError("seedance2 task did not complete in time")
+
+    @staticmethod
+    def _download(url: str, out_path: Path) -> None:
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with urllib.request.urlopen(url, timeout=300) as r, open(out_path, "wb") as f:
+            f.write(r.read())
+
+    @staticmethod
+    def _data_uri(image: Path) -> str:
+        import base64
+        mime = "image/png" if image.suffix.lower() == ".png" else "image/jpeg"
+        return f"data:{mime};base64," + base64.b64encode(image.read_bytes()).decode("ascii")
+
+    # -- public API ---------------------------------------------------------- #
+    def generate_image(self, prompt: str, out_path: Path, **opts) -> GenResult:
+        body = {"model": self.image_model,
+                "input": {"prompt": prompt, "aspect_ratio": opts.get("aspect_ratio", "9:16")}}
+        try:
+            created = self._request("POST", self.image_create, body)
+            task_id = self._dig(created, "id", "task_id", "data.id")
+            done = self._poll(task_id, "image") if task_id else created
+            url = self._dig(done, "output.image_url", "output.url", "images.0.url",
+                            "data.url", "image_url")
+            if not url:
+                return GenResult(ok=False, request=body, response=done,
+                                 error="could not find image url in response (check field mapping)")
+            self._download(url, out_path)
+            return GenResult(ok=True, output_path=str(out_path), request=body, response=done)
+        except (urllib.error.URLError, RuntimeError, TimeoutError, KeyError) as e:
+            return GenResult(ok=False, request=body, error=str(e))
+
+    def generate_video(self, prompt, out_path, image=None, duration=5,
+                       resolution="720p", **opts) -> GenResult:
+        inp = {"prompt": prompt, "duration": duration, "resolution": resolution,
+               "aspect_ratio": opts.get("aspect_ratio", "9:16")}
+        if image:
+            inp["image"] = str(image) if self.image_as_url else self._data_uri(Path(image))
+        body = {"model": self.video_model, "input": inp}
+        try:
+            created = self._request("POST", self.video_create, body)
+            task_id = self._dig(created, "id", "task_id", "data.id")
+            done = self._poll(task_id, "video") if task_id else created
+            url = self._dig(done, "output.video_url", "output.url", "video.url",
+                            "data.video_url", "video_url")
+            if not url:
+                return GenResult(ok=False, request={**body, "input": {**inp, "image": "<omitted>"}},
+                                 response=done,
+                                 error="could not find video url in response (check field mapping)")
+            self._download(url, out_path)
+            req_log = {**body, "input": {**inp, "image": "<base64 omitted>" if image else None}}
+            return GenResult(ok=True, output_path=str(out_path), request=req_log, response=done)
+        except (urllib.error.URLError, RuntimeError, TimeoutError, KeyError) as e:
+            return GenResult(ok=False, request={**body, "input": {**inp, "image": "<omitted>"}},
+                             error=str(e))
+
+
 PROVIDERS = {
     "mock": MockProvider,
+    "seedance2": Seedance2Provider,
     "fal": FalProvider,
     "kie": KieProvider,
 }
@@ -199,4 +324,7 @@ PROVIDERS = {
 def get_provider(name: str) -> VideoProvider:
     if name not in PROVIDERS:
         raise SystemExit(f"Unknown provider '{name}'. Options: {', '.join(PROVIDERS)}")
-    return PROVIDERS[name]()
+    try:
+        return PROVIDERS[name]()
+    except RuntimeError as e:
+        raise SystemExit(f"Cannot use provider '{name}': {e}")
