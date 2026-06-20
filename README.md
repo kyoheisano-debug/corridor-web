@@ -22,3 +22,4 @@ DramaBox 型の縦型ショートドラマモデルを、**日本のアニメク
 
 - [`docs/market-research.md`](./docs/market-research.md) — 市場・競合・権利の調査レポート（2026-06 時点）
 - [`docs/roadmap.md`](./docs/roadmap.md) — フェーズ別ロードマップと意思決定ログ
+- [`docs/content/vietnam-concept.md`](./docs/content/vietnam-concept.md) — 第1作 企画（ベトナム史シリーズ）
