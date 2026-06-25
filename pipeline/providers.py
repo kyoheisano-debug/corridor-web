@@ -212,16 +212,22 @@ class Seedance2Provider(VideoProvider):
         self.key = os.environ.get("SEEDANCE2_API_KEY")
         if not self.key:
             raise RuntimeError("SEEDANCE2_API_KEY is not set (see pipeline/.env.example)")
-        self.base = os.environ.get("SEEDANCE2_BASE_URL", "https://seedance2.ai").rstrip("/")
+        self.base = os.environ.get("SEEDANCE2_BASE_URL", "https://seedance2.ai/api").rstrip("/")
         self.video_create = os.environ.get("SEEDANCE2_VIDEO_CREATE", "/v1/videos/generations")
         self.image_create = os.environ.get("SEEDANCE2_IMAGE_CREATE", "/v1/images/generations")
-        self.video_model = os.environ.get("SEEDANCE2_VIDEO_MODEL", "seedance-2.0")
-        self.image_model = os.environ.get("SEEDANCE2_IMAGE_MODEL", "seedance-2.0-image")
+        # Task status lives on its own path (not {create}/{id}).
+        self.task_status = os.environ.get("SEEDANCE2_TASK_STATUS", "/v1/tasks")
+        self.video_model = os.environ.get("SEEDANCE2_VIDEO_MODEL", "seedance-2-0")
+        self.image_model = os.environ.get("SEEDANCE2_IMAGE_MODEL", "seedance-2-0-image")
         self.image_as_url = os.environ.get("SEEDANCE2_IMAGE_AS_URL") == "1"
 
     # -- low-level helpers --------------------------------------------------- #
     def _headers(self) -> dict:
-        return {"Authorization": f"Bearer {self.key}", "Content-Type": "application/json"}
+        # seedance2.ai sits behind Cloudflare, which 403s the default
+        # "Python-urllib/x.y" UA; send a normal one (overridable via env).
+        ua = os.environ.get("SEEDANCE2_USER_AGENT", "corridor-pipeline/1.0")
+        return {"Authorization": f"Bearer {self.key}", "Content-Type": "application/json",
+                "User-Agent": ua}
 
     def _request(self, method: str, path_or_url: str, body: Optional[dict] = None) -> dict:
         url = path_or_url if path_or_url.startswith("http") else f"{self.base}{path_or_url}"
@@ -232,13 +238,18 @@ class Seedance2Provider(VideoProvider):
 
     @staticmethod
     def _dig(d: dict, *keys):
-        """Return the first present key from a (possibly nested) response."""
+        """Return the first present key from a (possibly nested) response.
+
+        Supports list indices in dotted paths, e.g. "data.results.0".
+        """
         for k in keys:
             cur = d
             ok = True
             for part in k.split("."):
                 if isinstance(cur, dict) and part in cur:
                     cur = cur[part]
+                elif isinstance(cur, list) and part.isdigit() and int(part) < len(cur):
+                    cur = cur[int(part)]
                 else:
                     ok = False
                     break
@@ -247,14 +258,15 @@ class Seedance2Provider(VideoProvider):
         return None
 
     def _poll(self, task_id: str, kind: str) -> dict:
-        path = f"{self.video_create if kind == 'video' else self.image_create}/{task_id}"
+        path = f"{self.task_status}/{task_id}"
         for _ in range(120):  # up to ~10 min at 5s
             data = self._request("GET", path)
             status = (self._dig(data, "status", "state", "data.status") or "").lower()
             if status in {"completed", "succeeded", "success", "done"}:
                 return data
             if status in {"failed", "error", "canceled"}:
-                raise RuntimeError(f"seedance2 task failed: {data}")
+                reason = self._dig(data, "failed_reason", "error", "message") or data
+                raise RuntimeError(f"seedance2 task failed: {reason}")
             time.sleep(5)
         raise TimeoutError("seedance2 task did not complete in time")
 
@@ -276,10 +288,10 @@ class Seedance2Provider(VideoProvider):
                 "input": {"prompt": prompt, "aspect_ratio": opts.get("aspect_ratio", "9:16")}}
         try:
             created = self._request("POST", self.image_create, body)
-            task_id = self._dig(created, "id", "task_id", "data.id")
+            task_id = self._dig(created, "taskId", "id", "task_id", "data.id")
             done = self._poll(task_id, "image") if task_id else created
-            url = self._dig(done, "output.image_url", "output.url", "images.0.url",
-                            "data.url", "image_url")
+            url = self._dig(done, "data.results.0", "output.image_url", "output.url",
+                            "images.0.url", "data.url", "image_url")
             if not url:
                 return GenResult(ok=False, request=body, response=done,
                                  error="could not find image url in response (check field mapping)")
@@ -297,16 +309,22 @@ class Seedance2Provider(VideoProvider):
         body = {"model": self.video_model, "input": inp}
         try:
             created = self._request("POST", self.video_create, body)
-            task_id = self._dig(created, "id", "task_id", "data.id")
+            task_id = self._dig(created, "taskId", "id", "task_id", "data.id")
             done = self._poll(task_id, "video") if task_id else created
-            url = self._dig(done, "output.video_url", "output.url", "video.url",
-                            "data.video_url", "video_url")
+            url = self._dig(done, "data.results.0", "output.video_url", "output.url",
+                            "video.url", "data.video_url", "video_url")
             if not url:
                 return GenResult(ok=False, request={**body, "input": {**inp, "image": "<omitted>"}},
                                  response=done,
                                  error="could not find video url in response (check field mapping)")
-            self._download(url, out_path)
             req_log = {**body, "input": {**inp, "image": "<base64 omitted>" if image else None}}
+            try:
+                self._download(url, out_path)
+            except urllib.error.URLError as e:
+                # The clip was generated (and billed) — keep the remote URL so it
+                # isn't lost even if this network can't reach the CDN host.
+                return GenResult(ok=False, output_path=url, request=req_log, response=done,
+                                 error=f"generated ok but download failed ({e}); video url: {url}")
             return GenResult(ok=True, output_path=str(out_path), request=req_log, response=done)
         except (urllib.error.URLError, RuntimeError, TimeoutError, KeyError) as e:
             return GenResult(ok=False, request={**body, "input": {**inp, "image": "<omitted>"}},

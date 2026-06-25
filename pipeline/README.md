@@ -36,24 +36,29 @@ python3 generate.py --episode episodes/ep01.json --provider seedance2
 ```
 
 - 標準ライブラリのみで動作（`requests` 不要）。Bearer 認証・非同期タスク（作成→ポーリング）に対応。
-- **要確認**: エンドポイント/フィールド名は `https://seedance2.ai/api-docs`（要ログイン）の仕様に
-  合わせて `providers.py` のデフォルトを置いている。差異があれば `.env` の
-  `SEEDANCE2_*` で上書き可能（コード改修不要）。下記「seedance2.ai の設定確認」参照。
+- 既定値は **実 API（seedance2.ai）で疎通確認済み**。差異があれば `.env` の
+  `SEEDANCE2_*` で上書き可能（コード改修不要）。下記「seedance2.ai の設定」参照。
 - image-to-video の参照画像は既定で **base64 で埋め込み**。APIがURL指定なら `SEEDANCE2_IMAGE_AS_URL=1`。
 - 価格感: Seedance は概ね **$0.10/秒前後**。5話計約409秒 → 1パス$40前後。リテイクを見込む。
+- **ネットワーク要件**: API は `seedance2.ai`、生成物の配信は `cdn.seedance2.ai`。
+  egress 制限のある環境では **両ホストを許可**すること（CDN が塞がれると生成は成功するが
+  ダウンロードのみ失敗し、エラーに動画 URL を残す）。
 
-### seedance2.ai の設定確認（最初の1回）
-api-docs を見て、実際の値と次の既定が合っているか確認する:
+### seedance2.ai の設定（疎通確認済みの実値）
 
-| .env キー | 既定値 | 確認ポイント |
+| .env キー | 既定値 | 備考 |
 |---|---|---|
+| `SEEDANCE2_BASE_URL` | `https://seedance2.ai/api` | API は `/api` プレフィックス配下 |
 | `SEEDANCE2_VIDEO_CREATE` | `/v1/videos/generations` | 動画タスク作成の POST パス |
 | `SEEDANCE2_IMAGE_CREATE` | `/v1/images/generations` | 画像タスク作成の POST パス |
-| `SEEDANCE2_VIDEO_MODEL` | `seedance-2.0` | 動画モデル名 |
-| `SEEDANCE2_IMAGE_MODEL` | `seedance-2.0-image` | 画像モデル名 |
+| `SEEDANCE2_TASK_STATUS` | `/v1/tasks` | 進捗ポーリング（`GET /v1/tasks/{id}`、作成パスとは別系統） |
+| `SEEDANCE2_VIDEO_MODEL` | `seedance-2-0` | 動画モデル名（`seedance-2-0-fast` も可） |
+| `SEEDANCE2_IMAGE_MODEL` | `seedance-2-0-image` | 画像モデル名 |
+| `SEEDANCE2_USER_AGENT` | `corridor-pipeline/1.0` | Cloudflare が `Python-urllib/*` を 403 で弾くため明示指定 |
 
-レスポンスの task id / video url のフィールド名は複数候補を自動探索する実装（`_dig`）。
-それでも拾えない場合はエラーに「check field mapping」と出るので、api-docs の実フィールドを共有のこと。
+実 API の形状: 作成 → `{"taskId": "...", "credits": N}` / ポーリング →
+`{"status": "completed", "data": {"results": ["https://cdn.seedance2.ai/...mp4"]}}`。
+`duration` は **4〜15 の整数**。これらは `_dig` の候補に含めてある。
 
 ## よく使うオプション
 
